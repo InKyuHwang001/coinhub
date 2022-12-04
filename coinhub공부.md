@@ -96,29 +96,62 @@ public class UserController {
 
 ---
 
-## bean
+## Spring bean
 
-**스프링 빈**은 스프링 Ioc컨테이너에 의하여 관리되는 객체이다. **스프링 Ioc컨테이너**는 빈을 관리하는 객체이다. 빈과 스프링 Ioc컨테이너는 서로를 설명하는 의존적 존재이다.
+**스프링 빈**은 스프링 Ioc컨테이너에 의하여 관리되는 객체이다. **스프링 Ioc컨테이너**는 빈을 관리하는 객체이다. 스프링 빈과 스프링 Ioc컨테이너는 서로를 설명하는 의존적 존재이다.
 
-빈과 의존성 주입
+### 빈과 의존성 주입
+
+**직접 의존성을 주입**하는 것은 **의존관계를 모두 파악** 해야하는 불편함이 있다. 또한 **객체의 중복생성**이란 문제가 발생한다. 따라서 의존성 주입이 필요한 객체를 빈으로 등록하여 스프링컨테이너가 관리하게끔 해야 한다.
+
+### 스프링 빈이 필요한 이유
+
+스프링 Ioc컨테이너가 특정 객체의 라이프사이클을 관리한다는 것을 명시
+
+### 스프링 Ioc컨테이너는 왜 빈을 관리할까?
+
+의존성을 사용하는 로직에만 집중이 가능
+
+의존성이 주입 될 객체가 싱글 오브젝트임을 보장
 
 
 
+### 등록방법
 
+- Component Scanning
+  - @Component
+    - @Repository
+    - @Service
+    - @Controller
+    - @Configguration
+- 직접 일일히 XML이나 자바 설정 파일에 등록(@Configuration+@Bean)
 
-스프링 빈이 필요한 이유
+### 사용법
 
-스프링 Ioc컨테이너는 왜 빈을 관리할까?
+- @Autowired or @Inject
+- ApplicationContext에서 getBean()으로 직접 써내시
+
+### 특징 
+
+- 오로지 빈들만 의존성 주입을 해준다.
 
 참조: https://melonicedlatte.com/2021/07/11/232800.html
 
+​          https://www.youtube.com/watch?v=qaIQfl0ob84
+
 ---
 
-인터페이스 
+## 인터페이스(미완)
 
 ​	인터페이스는 클래스들에서 공통으로 사용되는 메서드를 상속시켜 반복을 줄일데 사용
 
+https://kadosholy.tistory.com/101
 
+
+
+
+
+오픈패인
 
 https://www.baeldung.com/spring-cloud-openfeign
 
