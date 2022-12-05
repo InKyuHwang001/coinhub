@@ -27,9 +27,9 @@ public class TransferCalculateService {
 //        //from 이체 수수료
 //        Map<String, Double> fromMarketServiceFee = fromMarketService.calculateBuy(commonCoins, amount);
 //        // to 얼마에 팔수 있는지
-//        CoinSellDTO toMarketSellDTO = toMarketService.calculateSell(commonCoins, amount);
+//        CoinSellDTO toMarketSellDTO = toMarketService.calculateSell(fromMarketBuyDTO);
 //        //가장 높은 값을 받을 수 있는 코인을 선택
-//        String transferCoin = toMarketSellDTO.getAmount().keySet().get(0); //TODO: 가장 많은 현금 받는 코인 선택
+//        String transferCoin = toMarketSellDTO.getAmount().keySet().get(0); //TODO: 가장 많은 현금 받는 코인 선택f
 //
 //        return new TransferCalculateDTO(
 //                transferCoin,

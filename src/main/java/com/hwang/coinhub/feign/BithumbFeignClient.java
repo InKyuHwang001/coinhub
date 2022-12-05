@@ -20,4 +20,7 @@ public interface BithumbFeignClient {
 
     @GetMapping("/assetsstatus/ALL")
     BithumbRsponse<Map<String, BithumbAssetEachStatus>> getAssetStatus();
+
+    @GetMapping("/orderbook/ALL_KRW")
+    BithumbRsponse<Map<String, Object>> getOrderBook();
 }
