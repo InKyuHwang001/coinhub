@@ -141,21 +141,68 @@ public class UserController {
 
 ---
 
-## 인터페이스(미완)
+## 인터페이스
 
 ​	인터페이스는 클래스들에서 공통으로 사용되는 메서드를 상속시켜 반복을 줄일데 사용
 
-https://kadosholy.tistory.com/101
+### 정의
+
+**인터페이스**란 몸체가 없는 메서드들의 집합이다. 클래스를 구현하기 전에 만들 메서드를 먼저 정해놓는 것이다.
+
+```java
+public interface Service {
+
+    public static final number = 10;
+        
+    String getString(String a);
+    int getInteger(int b);
+}
+// 메서드명, 리턴 타입, 매개변수를 정의
+// 인터페이스에서 필드를 선언할 수 있지만 static final이 강제 적용되기 때문에 해당 필드의 값을 변경할 수 없다.
+```
+
+```java
+public class ServiceImpl implements Service {
+        
+    public String getString(String a) {
+            return a;
+    }
+    
+    public int getInteger(int b) {
+            return b;
+    }
+}
+//인터페이스에서 정의한 메서드들을 똑같이 적어 로직을 구현한다. 
+	//메서드명이나 매개변수가 다르면 오류
+	//메서드들을 구현할 때 접근 제어자는 public이어야 한다
+
+```
+
+### 사용 이유
+
+인터페이스를 이용하여 클래스를 구현하면 **다른 클래스와 대체가 유연**해서 **유지보수**가 편해진다.
+
+
+
+참고 : https://kadosholy.tistory.com/101
+
+​            https://lifejusik1004.tistory.com/entry/Java-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%9D%98-%EC%A0%95%EC%9D%98%EC%99%80-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0
 
 
 
 
 
-오픈패인
+## OpenFeign
 
-https://www.baeldung.com/spring-cloud-openfeign
+OpenFeign은 REST Call을 위해 호출하는 클라이언트를 보다 쉽게 작성할 수 있도록 도와주는 라이브러이다.
+
+참조: https://www.baeldung.com/spring-cloud-openfeign
+
+​	      https://sharplee7.tistory.com/68
 
 ---
+
+## 파라미터 
 
 파라미터는 쿼리랑 페스 파라미터로 나뉜다.
 
@@ -165,8 +212,27 @@ https://www.baeldung.com/spring-cloud-openfeign
 
 ---
 
-빌드는 코드를 작성해 컴파일 된것에 외부라이브러리를 추가하여 실행파일로 만드는 과정이다.
+## 기타(1)
 
-컴파일은 우리가짠 코드를 컴퓨터가 사용하는 언어로 변환하는 것이다.
+**빌드**는 코드를 작성해 **컴파일 된 것**에 외부 **라이브러리를 추가**하여 **실행파일로 만드는 과정**이다.
 
-LomBok은 컴파일 하는 과정에서 사용되는 것이다.
+**컴파일**은 우리가짠 코드를 **컴퓨터가 사용하는 언어**로 **변환**하는 것이다.
+
+**LomBok**은 **컴파일 하는 과정에서 사용**되는 것이다.
+
+---
+
+## Test
+
+**전체적**으로 C S F에 잘 되는 지 확인 하는 것이 **통합 테스트**이고 단계 **단계를 끈어**서 하는 것이 **유닛 테스트**이다. **mock**을 사용하여 **임시데이터**를 받아야 유닛테스트가 가능하다.
+
+### UnitTest
+
+로컬테스를 통과했어도 다른곳에도 문제가 있을 수 있기 때문에 유닛 테스트가 필요하다.
+
+### 통합 테스트(Integration Test)
+
+통테는 여러 모듈들을 모아 이들이 의도대로 협력하는지 확인하는 테스트이다.
+
+ 
+
