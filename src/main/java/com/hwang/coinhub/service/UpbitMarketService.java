@@ -2,7 +2,9 @@ package com.hwang.coinhub.service;
 
 import com.hwang.coinhub.dto.CoinBuyDTO;
 import com.hwang.coinhub.dto.CoinSellDTO;
+import com.hwang.coinhub.feign.UpbitFeeFeignClient;
 import com.hwang.coinhub.feign.UpbitFeignClient;
+import com.hwang.coinhub.model.UpbitEachWithdrawalFee;
 import com.hwang.coinhub.model.UpbitOrderBooks;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UpbitMarketService implements MarketService {
     private final UpbitFeignClient upbitFeignClient;
+    private final UpbitFeeFeignClient upbitFeeFeignClient;
 
     public double getCoinCurrentPrice(String coin) {
         return upbitFeignClient.getCoinPrice("KRW-" + coin.toUpperCase())
@@ -27,7 +30,7 @@ public class UpbitMarketService implements MarketService {
     public List<String> getCoins() {
         List<String> result = new ArrayList<>();
         upbitFeignClient.getMarketCode().forEach(k -> {
-            if(k.getMarket().startsWith("KRW")) {
+            if (k.getMarket().startsWith("KRW")) {
                 result.add(k.getMarket().substring(4).toUpperCase());
             }
         });
@@ -47,14 +50,14 @@ public class UpbitMarketService implements MarketService {
             Map<Double, Double> eachOrderBook = new HashMap<>();
 
             List<UpbitOrderBooks.UpbitEachOrderBooks> eachOrderBooks = k.getOrderbook_units();
-            for(int i=0; i<eachOrderBooks.size(); i++) {
+            for (int i = 0; i < eachOrderBooks.size(); i++) {
                 Double price = eachOrderBooks.get(i).getAsk_price();
                 Double quantity = eachOrderBooks.get(i).getAsk_size();
                 Double eachTotalPrice = price * quantity;
-                double buyableCoinAmount = availableCurrency/price;
+                double buyableCoinAmount = availableCurrency / price;
 
                 // 만약 가격 넘으면 다음스텝,아니면 끝내기
-                if(eachTotalPrice >= availableCurrency) { // 못넘어갈경우
+                if (eachTotalPrice >= availableCurrency) { // 못넘어갈경우
                     availableCoin += buyableCoinAmount;
                     eachOrderBook.put(price, buyableCoinAmount);
                     availableCurrency = 0;
@@ -67,7 +70,7 @@ public class UpbitMarketService implements MarketService {
             }
 
             // 금액 모두 맞추지 못했을때 조건 추가 > 넣지 말기
-            if(availableCurrency == 0) {
+            if (availableCurrency == 0) {
                 amounts.put(coin, availableCoin);
                 orderBooks.put(coin, eachOrderBook);
             }
@@ -89,16 +92,16 @@ public class UpbitMarketService implements MarketService {
             double sellCurrency = 0;
             Double availableCoin = sellingAmounts.get(coin);
 
-            if(availableCoin != null) {
+            if (availableCoin != null) {
                 Map<Double, Double> eachOrderBook = new HashMap<>();
                 List<UpbitOrderBooks.UpbitEachOrderBooks> eachOrderBooks = k.getOrderbook_units();
-                for(int i=0; i<eachOrderBooks.size(); i++) {
+                for (int i = 0; i < eachOrderBooks.size(); i++) {
                     Double price = eachOrderBooks.get(i).getBid_price();
                     Double quantity = eachOrderBooks.get(i).getBid_size();
                     Double eachTotalPrice = price * quantity;
 
                     // 만약 코인 양 더 많으면 끝내기
-                    if(quantity >= availableCoin) { // 못넘어갈경우
+                    if (quantity >= availableCoin) { // 못넘어갈경우
                         sellCurrency += price * availableCoin;
                         eachOrderBook.put(price, availableCoin);
                         availableCoin = 0D;
@@ -110,7 +113,7 @@ public class UpbitMarketService implements MarketService {
                     }
                 }
                 // 모두 팔지 못했을때 조건 추가 > 넣지 말기
-                if(availableCoin == 0) {
+                if (availableCoin == 0) {
                     amounts.put(coin, sellCurrency);
                     orderBooks.put(coin, eachOrderBook);
                 }
@@ -120,5 +123,12 @@ public class UpbitMarketService implements MarketService {
         return new CoinSellDTO(amounts, orderBooks);
     }
 
-
+    public Map<String/*Coin Name*/, Double/* Withdrawal Fee*/> calculateFee() throws Exception {
+        return upbitFeeFeignClient.getWithdrawalFee().getData()
+                .stream()
+                .collect(Collectors.toMap(
+                        UpbitEachWithdrawalFee::getCurrency,
+                        UpbitEachWithdrawalFee::getWithdrawalFee
+                ));
+    }
 }

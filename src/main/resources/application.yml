@@ -1,2 +1,4 @@
 server:
   port: 9090
+feeUrl:
+  bithumb: https://www.bithumb.com/customer_support/info_fee
