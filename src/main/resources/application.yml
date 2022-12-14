@@ -1,4 +1,10 @@
 server:
   port: 9090
+
 feeUrl:
   bithumb: https://www.bithumb.com/customer_support/info_fee
+
+cache:
+  ttl: #time to live
+    default: 10_000 #10s
+    withdrawalFee: 3600_000 #1hr

@@ -1,5 +1,6 @@
 package com.hwang.coinhub.service;
 
+import com.hwang.coinhub.constant.CacheConstants;
 import com.hwang.coinhub.dto.CoinBuyDTO;
 import com.hwang.coinhub.dto.CoinSellDTO;
 import com.hwang.coinhub.feign.BithumbFeignClient;
@@ -9,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -136,6 +138,7 @@ public class BithumbMarketService implements MarketService {
         return new CoinSellDTO(amounts, orderBooks);
     }
 
+    @Cacheable(CacheConstants.BITHUMB_WITHDRAWAL_FEE)
     public Map<String/*Coin Name*/, Double/* Withdrawal Fee*/> calculateFee() throws Exception {
         Map<String, Double> result = new HashMap<>();
         Document doc = Jsoup.connect(feeUrl).timeout(60000).get();
@@ -158,6 +161,5 @@ public class BithumbMarketService implements MarketService {
         }
 
         return result;
-    };
-
+    }
 }

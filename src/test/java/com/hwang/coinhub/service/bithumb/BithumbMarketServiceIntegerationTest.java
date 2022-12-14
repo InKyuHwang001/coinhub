@@ -1,4 +1,4 @@
-package com.hwang.coinhub.service;
+package com.hwang.coinhub.service.bithumb;
 
 import com.hwang.coinhub.dto.CoinBuyDTO;
 import com.hwang.coinhub.dto.CoinSellDTO;
@@ -6,6 +6,7 @@ import com.hwang.coinhub.feign.BithumbFeignClient;
 import com.hwang.coinhub.feign.response.BithumbResponse;
 import com.hwang.coinhub.model.BithumbAssetEachStatus;
 import com.hwang.coinhub.model.BithumbCoinPrice;
+import com.hwang.coinhub.service.BithumbMarketService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

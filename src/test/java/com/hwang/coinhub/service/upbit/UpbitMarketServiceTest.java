@@ -1,4 +1,4 @@
-package com.hwang.coinhub.service;
+package com.hwang.coinhub.service.upbit;
 
 import com.hwang.coinhub.dto.CoinBuyDTO;
 import com.hwang.coinhub.dto.CoinSellDTO;
@@ -6,6 +6,7 @@ import com.hwang.coinhub.feign.UpbitFeignClient;
 import com.hwang.coinhub.model.UpbitCoinPrice;
 import com.hwang.coinhub.model.UpbitMarketCode;
 import com.hwang.coinhub.model.UpbitOrderBooks;
+import com.hwang.coinhub.service.UpbitMarketService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
