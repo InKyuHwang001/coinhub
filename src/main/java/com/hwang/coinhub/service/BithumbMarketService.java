@@ -52,7 +52,7 @@ public class BithumbMarketService implements MarketService {
         // orderbook for 돌면
         bithumbResponse.forEach((k, v) -> { // key: coin, v: object
             if(!(k.equalsIgnoreCase("timestamp") || k.equalsIgnoreCase("payment_currency"))
-                && commonCoins.contains(k)
+                    && commonCoins.contains(k)
             ) {
                 double availableCurrency = amount;
                 double availableCoin = 0;
@@ -144,7 +144,7 @@ public class BithumbMarketService implements MarketService {
         Document doc = Jsoup.connect(feeUrl).timeout(60000).get();
         Elements elements = doc.select("table.fee_in_out tbody tr");
 
-        for(Element element: elements){
+        for (Element element: elements) {
             String coinHtml = element.select("td.money_type.tx_c").html();
             if(!coinHtml.contains("(")){
                 continue;
