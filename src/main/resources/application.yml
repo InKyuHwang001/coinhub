@@ -7,4 +7,4 @@ feeUrl:
 cache:
   ttl: #time to live
     default: 10_000 #10s
-    withdrawalFee: 3600_000 #1hr
+    withdrawalFee: 3_600_000 #1hr
